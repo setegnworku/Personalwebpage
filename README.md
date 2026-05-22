@@ -1,83 +1,155 @@
 # Dr. Setegn Worku Alemu — Portfolio (React)
 
-Modern portfolio site built with React, Vite, and Framer Motion. Replaces the legacy HTML site at [setegnworku/Personalwebpage](https://github.com/setegnworku/Personalwebpage).
+Modern portfolio site built with **React**, **Vite**, and **Framer Motion**. Replaces the legacy HTML site at [setegnworku/Personalwebpage](https://github.com/setegnworku/Personalwebpage).
 
-**Live site (after deploy):** https://setegnworku.github.io/Personalwebpage/
+**Live site:** https://setegnworku.github.io/Personalwebpage/
 
-## Local development
+---
+
+## What’s new (major update)
+
+### Blog page + Supabase
+
+The biggest change is a full **Blog** section connected to **[Supabase](https://supabase.com)**:
+
+| Feature | How it works |
+|---------|----------------|
+| **Read posts** | Anyone — posts load from Supabase `blog_posts` |
+| **Write / delete posts** | **You only** — **Sign in with GitHub** on the Blog page |
+| **Who is admin?** | GitHub username must match `VITE_ADMIN_GITHUB_USERNAME` (default: `setegnworku`) |
+| **Database security** | Row Level Security (RLS) in PostgreSQL — non-admins cannot insert/delete even if they tamper with the UI |
+| **Post format** | Markdown in the editor; optional full HTML article at `/why_machines_learn_blog.html` |
+
+```
+┌─────────────┐     Sign in with GitHub      ┌──────────────┐
+│  Blog page  │ ───────────────────────────► │   Supabase   │
+│  (React)    │ ◄── session + JWT metadata   │   Auth       │
+└─────────────┘                              └──────────────┘
+       │                                              │
+       │  fetch / insert / delete                     │
+       ▼                                              ▼
+┌─────────────┐                              ┌──────────────┐
+│  Visitors   │  read only                   │  blog_posts  │
+│  (public)   │                              │  table + RLS │
+└─────────────┘                              └──────────────┘
+```
+
+**First-time Supabase setup:** [SETUP_SUPABASE.md](./SETUP_SUPABASE.md)  
+**Full change list:** [CHANGELOG.md](./CHANGELOG.md)
+
+### Rest of the site
+
+- **Home** — animated hero, stats, navigation  
+- **About** — profile, skills, research interests  
+- **Shiny Applications** — links to your Shiny apps  
+- **Contact** — get in touch  
+- **Comments on posts** (optional) — [Giscus](https://giscus.app) + GitHub Discussions (separate from Supabase admin)
+
+---
+
+## Quick start (local)
 
 ```bash
 npm install
+cp .env.example .env
+# Edit .env: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_ADMIN_GITHUB_USERNAME
 npm run dev
 ```
 
-Open http://localhost:5173/Personalwebpage/
+Open http://localhost:5173/Personalwebpage/ (or the port Vite prints).
 
-## Build
+**Blog:** go to **Blog** → **Sign in with GitHub** → **+ New post** (admin only).
+
+---
+
+## Environment variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `VITE_SUPABASE_URL` | Yes | Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Yes | Public anon key (not service_role) |
+| `VITE_ADMIN_GITHUB_USERNAME` | Yes | Only this GitHub user manages posts |
+| `VITE_GISCUS_REPO` | No | Comments |
+| `VITE_GISCUS_REPO_ID` | No | Comments |
+| `VITE_GISCUS_CATEGORY` | No | Comments |
+| `VITE_GISCUS_CATEGORY_ID` | No | Comments |
+
+Never commit `.env` — it is in `.gitignore`.
+
+---
+
+## Project layout (blog + Supabase)
+
+```
+src/
+  context/AuthContext.jsx      # GitHub OAuth session
+  lib/supabase.js              # Supabase client
+  lib/blogPosts.js             # CRUD for blog_posts
+  lib/admin.js                 # Admin username check
+  components/Blog.jsx          # Blog UI
+  components/BlogAuthPanel.jsx # Sign in with GitHub
+  data/whyMachinesLearnContent.md
+supabase/schema.sql            # Table + RLS policies (run in Supabase SQL Editor)
+public/why_machines_learn_blog.html
+.github/workflows/deploy.yml   # Build + GitHub Pages (injects secrets)
+```
+
+---
+
+## Build & deploy
 
 ```bash
 npm run build
 ```
 
-Output is in `dist/` (configured for GitHub Pages base path `/Personalwebpage/`).
+Output: `dist/` (base path `/Personalwebpage/`).
 
-See **[DEPLOY.md](./DEPLOY.md)** for full steps to replace [setegnworku/Personalwebpage](https://github.com/setegnworku/Personalwebpage).
+**Deploy:** push to `master` on [setegnworku/Personalwebpage](https://github.com/setegnworku/Personalwebpage). GitHub Actions runs `.github/workflows/deploy.yml`.
 
-## Deploy to GitHub Pages (replace old site)
+**Before live blog works**, add Actions secrets (same as `.env`) — see [DEPLOY_NOW.md](./DEPLOY_NOW.md).
 
-### 1. Push this project to your repo
+1. **Settings → Pages → Source:** GitHub Actions  
+2. Secrets: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_ADMIN_GITHUB_USERNAME`  
+3. Supabase redirect URL: `https://setegnworku.github.io/Personalwebpage/`
 
-From this folder:
-
-```bash
-git init
-git add .
-git commit -m "Replace static site with React portfolio"
-git remote add origin https://github.com/setegnworku/Personalwebpage.git
-git branch -M master
-git push -u origin master
-```
-
-If the repo already has history and you want to fully replace it:
-
-```bash
-git push -u origin master --force
-```
-
-Only use `--force` when you intend to overwrite the old HTML site.
-
-### 2. Enable GitHub Pages
-
-1. Open https://github.com/setegnworku/Personalwebpage/settings/pages
-2. Under **Build and deployment** → **Source**, choose **GitHub Actions**
-3. After the workflow runs, the site updates at https://setegnworku.github.io/Personalwebpage/
-
-The workflow `.github/workflows/deploy.yml` builds on every push to `master` or `main`.
-
-### Profile photo
-
-Place your headshot at `public/images/circle.png` (included when copied from the old repo).
+---
 
 ## Blog: posts vs comments
 
-| Action | Who |
-|--------|-----|
-| Create / delete posts | **You only** (Sign in with GitHub via Supabase) |
-| Comment on posts | **Anyone** (via GitHub / Giscus) |
+| Action | Who | System |
+|--------|-----|--------|
+| Create / delete posts | **You only** | **Supabase** + GitHub sign-in |
+| Read posts | Everyone | Supabase (or fallback seed in `content.js` if DB empty) |
+| Comment on posts | Visitors (optional) | **Giscus** (GitHub Discussions) — configure `VITE_GISCUS_*` |
 
-### 1. Supabase + GitHub sign-in
+### Supabase setup (summary)
 
-Follow **[SETUP_SUPABASE.md](./SETUP_SUPABASE.md)** to create a project, enable GitHub OAuth, run `supabase/schema.sql`, and set `.env` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_ADMIN_GITHUB_USERNAME`).
+1. Create project → copy URL + anon key → `.env`  
+2. Enable **GitHub** provider + OAuth app  
+3. Run `supabase/schema.sql` (replace `setegnworku` with your username if needed)  
+4. Add redirect URLs for localhost and GitHub Pages  
 
-On the Blog page, click **Sign in with GitHub**. Only the GitHub user matching `VITE_ADMIN_GITHUB_USERNAME` gets **+ New post** and delete controls (enforced in the database with row-level security).
+Details: **[SETUP_SUPABASE.md](./SETUP_SUPABASE.md)**
 
-For GitHub Pages deploy, add the same values as Actions secrets (see SETUP_SUPABASE.md).
+### Comments (optional)
 
-### 2. Enable public comments (Giscus)
+1. https://giscus.app → install on **setegnworku/Personalwebpage**  
+2. Enable **Discussions** on the repo  
+3. Add `VITE_GISCUS_*` to `.env` and GitHub Actions secrets  
 
-1. Open https://giscus.app and install on **setegnworku/Personalwebpage**
-2. Enable **Discussions** on that GitHub repo
-3. Copy the repo ID, category name, and category ID into `.env`
-4. Add the same values as GitHub Actions secrets for deploy
+---
 
-Visitors open a post, scroll to **Comments**, sign in with GitHub, and comment. You moderate via GitHub Discussions.
+## Profile photo
+
+`public/images/circle.png`
+
+---
+
+## Docs
+
+| File | Contents |
+|------|----------|
+| [CHANGELOG.md](./CHANGELOG.md) | Major changes (blog, Supabase, deploy) |
+| [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) | Supabase + GitHub OAuth step-by-step |
+| [DEPLOY_NOW.md](./DEPLOY_NOW.md) | Short deploy checklist |
+| [DEPLOY.md](./DEPLOY.md) | Full deploy + static HTML hosting |

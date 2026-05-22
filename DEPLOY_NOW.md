@@ -1,5 +1,17 @@
 # Deploy to https://setegnworku.github.io/Personalwebpage/
 
+## What this deploy includes
+
+- **React portfolio** replacing the old static HTML site  
+- **Blog page** with posts stored in **Supabase** (`blog_posts` table)  
+- **Sign in with GitHub** — only `setegnworku` (or your `VITE_ADMIN_GITHUB_USERNAME`) can add/delete posts  
+- **RLS** in Supabase so the database enforces admin-only writes  
+- Optional **Giscus** comments on each post  
+
+See **[CHANGELOG.md](./CHANGELOG.md)** and **[SETUP_SUPABASE.md](./SETUP_SUPABASE.md)** for full details.
+
+---
+
 ## Before you push — GitHub secrets
 
 Repo: **https://github.com/setegnworku/Personalwebpage**
