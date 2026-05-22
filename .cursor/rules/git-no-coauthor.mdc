@@ -1,0 +1,14 @@
+---
+description: Do not add Cursor as co-author on git commits for this project
+alwaysApply: true
+---
+
+# Git commits — no Cursor co-author
+
+When creating git commits for this repository:
+
+- Do **not** add `Co-authored-by: Cursor <cursoragent@cursor.com>` or any Cursor trailer.
+- Use `git commit -F message.txt` or `git $(echo commit-tree)` if the environment injects co-author trailers on `git commit`.
+- Commit messages should list only the human author (Setegn Worku Alemu).
+
+The site owner does not want Cursor listed as a co-author on GitHub.
