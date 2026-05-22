@@ -1,0 +1,638 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  .blog-root {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 0 4rem;
+  }
+
+  .hero {
+    background: linear-gradient(160deg, #0f2027, #203a43, #2c5364);
+    border-radius: var(--border-radius-lg);
+    padding: 3.5rem 2.5rem 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -20px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7dd3c8;
+    background: rgba(125,211,200,0.12);
+    border: 0.5px solid rgba(125,211,200,0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #f0f4f8;
+    margin: 0 0 1rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(240,244,248,0.65);
+    line-height: 1.6;
+    margin: 0 0 2rem;
+  }
+
+  .hero-byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 1.25rem;
+  }
+
+  .hero-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1d9e75, #0f6e56);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .hero-byline-text {
+    font-size: 13px;
+    color: rgba(240,244,248,0.6);
+    line-height: 1.5;
+  }
+
+  .hero-byline-text strong {
+    display: block;
+    color: rgba(240,244,248,0.9);
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.75rem;
+  }
+
+  .section h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+    line-height: 1.3;
+  }
+
+  .prose {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--color-text-secondary);
+  }
+
+  .prose p { margin: 0 0 1.1rem; }
+  .prose p:last-child { margin: 0; }
+
+  .prose em { font-style: italic; color: var(--color-text-primary); }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    margin: 2.5rem 0;
+  }
+
+  .pullquote {
+    border-left: 3px solid #1d9e75;
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--color-background-secondary);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  }
+
+  .pullquote p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .idea-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .idea-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1.1rem 1.25rem;
+    background: var(--color-background-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .idea-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .idea-num.teal { background: #E1F5EE; color: #0F6E56; }
+  .idea-num.blue { background: #E6F1FB; color: #185FA5; }
+  .idea-num.purple { background: #EEEDFE; color: #3C3489; }
+
+  .idea-title {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .idea-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .idea-body .prose { font-size: 0.97rem; }
+
+  .highlight-box {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-left: 3px solid #378ADD;
+  }
+
+  .highlight-box p {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .newton-block {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .newton-block h4 {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .newton-block h4 i { color: #BA7517; font-size: 18px; }
+
+  .vector-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 1.25rem 0;
+  }
+
+  .vector-pill {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+  }
+
+  .pill-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .pill-icon.teal { background: #E1F5EE; color: #0F6E56; }
+  .pill-icon.blue { background: #E6F1FB; color: #185FA5; }
+  .pill-icon.purple { background: #EEEDFE; color: #534AB7; }
+
+  .pill-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+  }
+
+  .pill-text span {
+    font-size: 12.5px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .country-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .country-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+  }
+
+  .country-row:last-child { border-bottom: none; }
+  .country-row:nth-child(even) { background: var(--color-background-secondary); }
+
+  .country-flag { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+  .country-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+
+  .country-lesson {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+
+  .closing-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem 2rem 1.75rem;
+    border: 0.5px solid var(--color-border-tertiary);
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .closing-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  .closing-card p {
+    font-size: 0.97rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0 0 1.5rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #0F6E56;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+  }
+
+  .bio {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .bio-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1d9e75, #0f6e56);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 500; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .bio-text {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .bio-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 3px;
+  }
+
+  .who-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 1rem 0;
+  }
+
+  .who-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+  }
+
+  .who-item i {
+    font-size: 18px;
+    color: #1d9e75;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .who-item p {
+    font-size: 13.5px;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .who-item p strong {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+</style>
+
+<div class="blog-root">
+
+  <div class="hero">
+    <div class="hero-tag">Book Review</div>
+    <h1>Why Machines Learn — A Book That Rewired How I Think</h1>
+    <p class="hero-sub">Three ideas from Anil Ananthaswamy's masterpiece that changed how I see learning — in machines and in myself.</p>
+    <div class="hero-byline">
+      <div class="hero-avatar">SW</div>
+      <div class="hero-byline-text">
+        <strong>Setegn Worku Alemu</strong>
+        Scientist, Statistical Genetics · ILRI Nairobi
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="prose">
+      <p>There is a book that completely changed how I see learning — not just in machines, but in myself. I found it standing in the rain, halfway up one of the steepest streets in the world.</p>
+      <p>It was a foggy afternoon in Dunedin, New Zealand. I was walking up Baldwin Street, earbuds in, half-listening to a machine learning lecture. Then the speaker said something I had struggled with for years. Suddenly it felt completely obvious. Like someone had wiped a window I did not even know was dirty. He mentioned Kilian Weinberger from Cornell. I stopped dead in the rain and said out loud, to nobody: <em>"What? What? What?"</em></p>
+      <p>I pulled out my phone, water dripping down my face, and ordered the book immediately. That book was <em>Why Machines Learn</em> by Anil Ananthaswamy. I read it that week — and then went back and reread whole sections, not because they confused me, but because they were that good.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">About the Author</div>
+    <h2>Who Is Anil Ananthaswamy?</h2>
+    <div class="prose">
+      <p>Anil is one of the finest science writers working today — a contributor to <em>Nature</em>, <em>New Scientist</em>, and <em>Quanta Magazine</em>. But do not let the label "science writer" suggest he approached this from the outside.</p>
+      <p>He watched Kilian Weinberger's full machine learning lecture series — the same lectures that stopped me on that hill in Dunedin. He learned Python alongside students at MIT, many of them half his age. He sought out and interviewed leading ML researchers from across the world, asking the questions most practitioners never stop to ask.</p>
+      <p>What I love most about Anil is that he gives full credit — to Kilian Weinberger, to the researchers he interviewed, to everyone who helped him understand. He makes himself a student throughout the book, not a guru. And somehow that honesty makes it <em>more</em> authoritative, not less.</p>
+    </div>
+    <div class="pullquote">
+      <p>"I hope your neurons enjoy this process as much as mine did." — Anil Ananthaswamy, prologue</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Three Ideas</div>
+    <h2>What Rewired My Thinking</h2>
+
+    <div class="idea-card">
+      <div class="idea-header">
+        <div class="idea-num teal">1</div>
+        <div class="idea-title">Learning is pattern recognition — nature invented it first</div>
+      </div>
+      <div class="idea-body">
+        <div class="prose">
+          <p>Think of a baby duckling. In the first hours after hatching, it follows the first moving object it sees — usually its mother. But Konrad Lorenz famously showed that if <em>you</em> are the first moving thing a gosling sees, it will follow you. Everywhere. Indefinitely.</p>
+          <p>The bird is not memorizing a shape. It is learning a <em>relationship</em> — "this moving thing is important, stay close." When young birds encounter two similar objects, they do not memorize either one. They learn the <em>concept of similarity itself</em> — and apply it to entirely new situations.</p>
+          <p>A brain the size of a peanut. A few days old. Performing abstraction.</p>
+        </div>
+        <div class="highlight-box">
+          <p>Machine learning did not invent a new form of intelligence. It formalized something nature has been perfecting for hundreds of millions of years.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card">
+      <div class="idea-header">
+        <div class="idea-num blue">2</div>
+        <div class="idea-title">We are all just numbers — and that is actually liberating</div>
+      </div>
+      <div class="idea-body">
+        <div class="prose">
+          <p>I memorized vectors in school — i, j, k — but never understood why they were invented. What problem were mathematicians actually trying to solve? Anil fills in that history, and this is where the book genuinely surprised me.</p>
+        </div>
+
+        <div class="newton-block">
+          <h4><i class="ti ti-apple" aria-hidden="true"></i> Newton — genius without the language</h4>
+          <div class="prose">
+            <p>Isaac Newton, working in the 1600s, discovered the laws of motion and gravity using geometric intuition alone. No vectors. No algebraic notation as we know it today. He described how planets orbit the sun and how objects fall — <em>without the mathematical language we now consider basic</em>.</p>
+            <p>That is not a criticism. That is a measure of how extraordinary he was. But even Newton's genius had a ceiling. Geometric intuition could not scale. As physics grew more complex, it ran out of room.</p>
+            <p>Vectors came later — Hamilton, Grassmann, Gibbs in the 1800s — because science needed a language that could describe direction and magnitude in any number of dimensions. Newton could not have imagined that his struggle would one day illuminate how a machine learns to recognize a face. He was solving a physics problem. He was unknowingly pointing at something universal: <em>the right language does not just describe the world — it unlocks it.</em></p>
+          </div>
+        </div>
+
+        <div class="vector-pills">
+          <div class="vector-pill">
+            <div class="pill-icon teal"><i class="ti ti-arrows-minimize" aria-hidden="true"></i></div>
+            <div class="pill-text">
+              <strong>Similarity becomes distance</strong>
+              <span>Similar vectors sit close together in space; very different ones sit far apart.</span>
+            </div>
+          </div>
+          <div class="vector-pill">
+            <div class="pill-icon blue"><i class="ti ti-angle" aria-hidden="true"></i></div>
+            <div class="pill-text">
+              <strong>Difference becomes angle</strong>
+              <span>The angle between two vectors tells you precisely how much they diverge.</span>
+            </div>
+          </div>
+          <div class="vector-pill">
+            <div class="pill-icon purple"><i class="ti ti-chart-scatter" aria-hidden="true"></i></div>
+            <div class="pill-text">
+              <strong>Patterns become measurable</strong>
+              <span>Relationships invisible to the naked eye become computable operations.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <p>Newton gave us the laws. The mathematicians who came after gave us the language. Three centuries later, that language is teaching machines to see.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card">
+      <div class="idea-header">
+        <div class="idea-num purple">3</div>
+        <div class="idea-title">Repetition is not failure — it is the architecture</div>
+      </div>
+      <div class="idea-body">
+        <div class="prose">
+          <p>I used to get frustrated when I did not understand something on the first try. There was always a quiet voice: <em>maybe this just is not for you.</em> I have heard students say this. I have felt it myself many times.</p>
+          <p>Anil dismantles that feeling completely. Both biological brains and artificial neural networks learn through thousands of small, gradual updates. No single pass delivers the insight. But after enough iterations, something clicks.</p>
+        </div>
+        <div class="highlight-box">
+          <p>Learning is slow. That is not a bug. That is the architecture. Once you accept this, learning becomes far less stressful — and far more honest.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Personal Reflection</div>
+    <h2>Seven Countries, One Pattern</h2>
+    <div class="prose">
+      <p>After reading this book, I started thinking about my own life differently. I began seeing myself as a learning system — a biological model continuously trained by experience.</p>
+      <p>Visiting a place gives you a gradient step. Living there gives you a full training epoch. I have lived and studied across seven countries and four continents. Each one was an epoch of its own.</p>
+    </div>
+
+    <div class="country-grid">
+      <div class="country-row">
+        <div class="country-flag">🇪🇹</div>
+        <div class="country-name">Ethiopia</div>
+        <div class="country-lesson">Where curiosity took root. Where I first fell in love with learning for its own sake.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇳🇱</div>
+        <div class="country-name">Netherlands</div>
+        <div class="country-lesson">Rewired me for precision. I arrived soft-spoken and indirect. I left direct and structured.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇺🇸</div>
+        <div class="country-name">America</div>
+        <div class="country-lesson">Taught me speed. Ask the question. Try the thing. Do not wait for permission.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇩🇰</div>
+        <div class="country-name">Denmark</div>
+        <div class="country-lesson">Slowed me down in the best way. Deep thinking, balance, trust in systems.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇧🇪</div>
+        <div class="country-name">Belgium</div>
+        <div class="country-lesson">Adaptability across disciplines, languages, and ways of framing the same problem.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇳🇿</div>
+        <div class="country-name">New Zealand</div>
+        <div class="country-lesson">Standing in that rain on Baldwin Street — where the pattern in my own life became visible.</div>
+      </div>
+      <div class="country-row">
+        <div class="country-flag">🇰🇪</div>
+        <div class="country-name">Nairobi</div>
+        <div class="country-lesson">Karibu nyumbani — welcome home. Where the earlier epochs finally feel integrated.</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>None of those were visits. Each one was long enough that when I left, I was not the same model. The map is not the territory — but it helps you see the shape of it.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Who Should Read It</div>
+    <h2>The Right Book for the Right People</h2>
+    <div class="who-grid">
+      <div class="who-item">
+        <i class="ti ti-cpu" aria-hidden="true"></i>
+        <p><strong>AI and data science practitioners</strong> — understand what you are building, not just how to use the tools.</p>
+      </div>
+      <div class="who-item">
+        <i class="ti ti-school" aria-hidden="true"></i>
+        <p><strong>Curious non-experts</strong> — intimidated by the mathematics? This is your on-ramp. Anil makes it feel human.</p>
+      </div>
+      <div class="who-item">
+        <i class="ti ti-heart" aria-hidden="true"></i>
+        <p><strong>Anyone who ever felt learning is too slow</strong> — this book will show you that slowness is not a flaw. It is the mechanism.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing-card">
+    <h3>Read it slowly.</h3>
+    <p>Let your neurons enjoy the process. There is a quiet click that happens somewhere in the middle — when the history, the mathematics, and the biology all start pointing in the same direction.<br><br>You will feel it.</p>
+    <button class="cta-btn" onclick="sendPrompt('Tell me more about gradient descent and probability from chapters 3 and 4 of Why Machines Learn')">Continue to Chapters 3 & 4 ↗</button>
+  </div>
+
+  <div class="bio">
+    <div class="bio-avatar">SW</div>
+    <div class="bio-text">
+      <strong>Setegn Worku Alemu</strong>
+      Scientist in Statistical Genetics at the International Livestock Research Institute (ILRI), Nairobi, Kenya. Works on genomic selection, genetic parameters, and AI applications in livestock breeding across Africa.
+    </div>
+  </div>
+
+</div>

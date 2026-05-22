@@ -1,0 +1,92 @@
+.adminActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.signedIn {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.signOutBtn {
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.signOutBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.githubBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  background: #24292f;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.githubBtn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.githubBtn::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815-.285 3.585-.96 4.35-1.845 1.305-2.385.99-2.97.75-.09 1.845.72 2.04 2.04 1.23 0 2.25-.015 3.075-.015.6 0 1.125.525 1.125 1.125 0 .81-.015 1.845-.015 2.25 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #dc2626;
+  margin-top: 8px;
+}
+
+.warnBox {
+  padding: 14px 16px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 12px;
+  max-width: 360px;
+}
+
+.warnBox p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.banner {
+  padding: 14px;
+  background: var(--bg2);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.banner code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8em;
+}
